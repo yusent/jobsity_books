@@ -3,7 +3,7 @@ class Api::V1::BooksController < ApplicationController
 
   # GET /books
   def index
-    @books = Book.all
+    @books = Book.search book_search_params
     render json: @books
   end
 
@@ -40,6 +40,10 @@ class Api::V1::BooksController < ApplicationController
   private
     def set_book
       @book = Book.find params[:id]
+    end
+
+    def book_search_params
+      params.permit :title
     end
 
     def book_params

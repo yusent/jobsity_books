@@ -12,6 +12,17 @@ RSpec.describe Api::V1::BooksController, type: :request do
       get api_v1_books_url, as: :json
       expect(response).to be_successful
     end
+
+    it "allows filtering by title" do
+      books = JSON.parse file_fixture("books.json").read
+      books.each { |book| create :book, title: book["title"] }
+
+      expect(Book.count).to eq(394)
+      get api_v1_books_url({ title: "in action" }), as: :json
+      response_body = JSON.parse response.body
+      expect(response).to be_successful
+      expect(response_body.count).to eq(167)
+    end
   end
 
   describe "GET /show" do

@@ -1,4 +1,6 @@
 class Book < ApplicationRecord
+  include Searchable
+
   scope :search_by_title, -> (title) do
     words = title.split /\W+/
     words.inject(all) do |results, word|
