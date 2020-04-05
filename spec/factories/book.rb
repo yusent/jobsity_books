@@ -8,8 +8,9 @@ FactoryBot.define do
     isbn do
       digits = 9.times.map { rand(0..9) }
       digits = [9, 7, rand(8..9), *digits] if rand > 0.5
-      check_digit = Isbn.calc_check_digit digits
-      Isbn.new(digits, check_digit).to_s
+      isbn_class = digits.length == 9 ? Isbn10 : Isbn13
+      check_digit = isbn_class.calc_check_digit digits
+      isbn_class.new(digits, check_digit).to_s
     end
   end
 end

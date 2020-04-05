@@ -6,6 +6,6 @@ class IsbnValidator < ActiveModel::EachValidator
   end
 
   def valid_isbn_code?(code)
-    !Isbn.parse(code).nil?
+    !IsbnParser.parse(code).nil?
   end
 end
