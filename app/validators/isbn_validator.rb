@@ -1,7 +1,7 @@
 class IsbnValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     unless value.nil? || valid_isbn_code?(value)
-      record.errors[attribute] << (options[:message] || "is not an ISBN code")
+      record.errors.add attribute, :invalid
     end
   end
 
