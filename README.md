@@ -1,24 +1,25 @@
-# README
+# Books API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[![Build Status](https://travis-ci.org/yusent/jobsity_books.svg?branch=master)](https://travis-ci.org/yusent/jobsity_books)
+[![Coverage Status](https://coveralls.io/repos/github/yusent/jobsity_books/badge.svg?branch=master)](https://coveralls.io/github/yusent/jobsity_books?branch=master)
 
-Things you may want to cover:
+## Install & Run
 
-* Ruby version
+### Using Docker Compose
+```shell
+$ docker-compose up
+```
 
-* System dependencies
+### Locally
+Ruby 2.6.6 was used. I recommend using [rvm](https://rvm.io) to handle the environment.
+```shell
+$ bundle install
+$ bundle exec rails db:migrate
+$ bundle exec rails server
+```
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Testing
+```shell
+$ bundle exec rspec
+```
+For manual testing I recommend using [Postman](https://www.postman.com).
