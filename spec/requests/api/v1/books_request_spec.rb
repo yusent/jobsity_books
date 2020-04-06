@@ -92,7 +92,7 @@ RSpec.describe Api::V1::BooksController, type: :request do
     end
 
     context "with invalid parameters" do
-      it "renders a JSON response with errors for the api/v1_book" do
+      it "renders a JSON response with errors for the book" do
         model.save
         patch api_v1_book_url(model), params: invalid_attributes, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
@@ -102,7 +102,7 @@ RSpec.describe Api::V1::BooksController, type: :request do
   end
 
   describe "DELETE /destroy" do
-    it "destroys the requested api/v1_book" do
+    it "destroys the requested book" do
       model.save
       expect { delete api_v1_book_url(model), as: :json }
         .to change(Book, :count).by(-1)
