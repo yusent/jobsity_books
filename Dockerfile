@@ -11,6 +11,7 @@ ENV RAILS_ENV production
 
 # Install gems
 RUN bundle install --deployment --without development test \
+  && cp config/database.docker.yml config/database.yml \
   && bundle exec rails db:migrate
 
 ENTRYPOINT ["bundle", "exec", "rails", "server"]
