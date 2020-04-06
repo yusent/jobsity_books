@@ -23,6 +23,17 @@ RSpec.describe Api::V1::BooksController, type: :request do
       expect(response).to be_successful
       expect(response_body.count).to eq(167)
     end
+
+    it "allows filtering by isbn" do
+      isbn_codes = JSON.parse file_fixture("valid_isbn_codes.json").read
+      isbn_codes.each { |isbn| create :book, isbn: isbn }
+
+      expect(Book.count).to eq(isbn_codes.count)
+      get api_v1_books_url({ isbn: isbn_codes.first }), as: :json
+      response_body = JSON.parse response.body
+      expect(response).to be_successful
+      expect(response_body.count).to eq(1)
+    end
   end
 
   describe "GET /show" do

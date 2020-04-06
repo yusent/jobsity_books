@@ -43,7 +43,7 @@ class Api::V1::BooksController < ApplicationController
     end
 
     def book_search_params
-      params.permit :title
+      params.permit :title, :isbn
     end
 
     def book_params
