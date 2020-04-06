@@ -15,6 +15,9 @@ RSpec.describe Book, type: :model do
     it { should validate_presence_of(:price) }
     it { should validate_presence_of(:short_description) }
 
+    # Length validations
+    it { should validate_length_of(:short_description).is_at_most(150) }
+
     it "should validate ISBN format" do
       expect(model).to be_valid
 
