@@ -17,7 +17,7 @@ RSpec.describe Api::V1::BooksController, type: :request do
       books = JSON.parse file_fixture("books.json").read
       books.each { |book| create :book, title: book["title"] }
 
-      expect(Book.count).to eq(394)
+      expect(Book.count).to eq(books.count)
       get api_v1_books_url({ title: "in action" }), as: :json
       response_body = JSON.parse response.body
       expect(response).to be_successful

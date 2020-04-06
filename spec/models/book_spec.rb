@@ -29,7 +29,7 @@ RSpec.describe Book, type: :model do
       books = JSON.parse file_fixture("books.json").read
       books.each { |book| create :book, title: book["title"] }
 
-      expect(Book.count).to eq(394)
+      expect(Book.count).to eq(books.count)
       expect(Book.search_by_title("in action").count).to eq(167)
     end
   end
@@ -39,7 +39,7 @@ RSpec.describe Book, type: :model do
       isbn_codes = JSON.parse file_fixture("valid_isbn_codes.json").read
       isbn_codes.each { |isbn| create :book, isbn: isbn }
 
-      expect(Book.count).to eq(6)
+      expect(Book.count).to eq(isbn_codes.count)
       expect(Book.search_by_isbn("164093054X").count).to eq(1)
       expect(Book.search_by_isbn("ISBN-10: 1-640-93054-X").count).to eq(1)
       expect(Book.search_by_isbn("9781640930544").count).to eq(1)
