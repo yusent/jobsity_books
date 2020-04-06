@@ -10,4 +10,10 @@ class Book < ApplicationRecord
 
   validates_presence_of :title, :author, :isbn, :price, :short_description
   validates :isbn, isbn: true
+
+  before_save :apply_isbn_standard_format
+
+  def apply_isbn_standard_format
+    self.isbn = IsbnParser.parse(isbn).to_s
+  end
 end

@@ -33,4 +33,14 @@ RSpec.describe Book, type: :model do
       expect(Book.search_by_title("in action").count).to eq(167)
     end
   end
+
+  describe "before_save" do
+    it "stores the ISBN code using standard format" do
+      book = create :book, isbn: "1933988673"
+      expect(book.isbn).to eq("ISBN-10: 1-933-98867-3")
+
+      book = create :book, isbn: "9781640930544"
+      expect(book.isbn).to eq("ISBN-13: 978-1-64-093054-4",)
+    end
+  end
 end
