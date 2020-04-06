@@ -8,6 +8,8 @@ class Book < ApplicationRecord
     end
   end
 
+  scope :search_by_isbn, -> (isbn) { where isbn: IsbnParser.parse(isbn).to_s }
+
   validates_presence_of :title, :author, :isbn, :price, :short_description
   validates :isbn, isbn: true
 

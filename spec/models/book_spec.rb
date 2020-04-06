@@ -34,6 +34,21 @@ RSpec.describe Book, type: :model do
     end
   end
 
+  describe "search_by_isbn scope" do
+    it "filters books by ISBN code" do
+      isbn_codes = JSON.parse file_fixture("valid_isbn_codes.json").read
+      isbn_codes.each { |isbn| create :book, isbn: isbn }
+
+      expect(Book.count).to eq(6)
+      expect(Book.search_by_isbn("164093054X").count).to eq(1)
+      expect(Book.search_by_isbn("ISBN-10: 1-640-93054-X").count).to eq(1)
+      expect(Book.search_by_isbn("9781640930544").count).to eq(1)
+      expect(Book.search_by_isbn("ISBN: 978-1-64-093054-4").count).to eq(1)
+      expect(Book.search_by_isbn("ISBN-13: 978-1-64-093054-4").count).to eq(1)
+      expect(Book.search_by_isbn("978-1-64-093054-4").count).to eq(1)
+    end
+  end
+
   describe "before_save" do
     it "stores the ISBN code using standard format" do
       book = create :book, isbn: "1933988673"
