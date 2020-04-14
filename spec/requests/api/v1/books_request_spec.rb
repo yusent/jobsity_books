@@ -21,7 +21,7 @@ RSpec.describe Api::V1::BooksController, type: :request do
       get api_v1_books_url({ title: "in action" }), as: :json
       response_body = JSON.parse response.body
       expect(response).to be_successful
-      expect(response_body.count).to eq(167)
+      expect(response_body["books"].count).to eq(100)
     end
 
     it "allows filtering by isbn" do
@@ -29,10 +29,38 @@ RSpec.describe Api::V1::BooksController, type: :request do
       isbn_codes.each { |isbn| create :book, isbn: isbn }
 
       expect(Book.count).to eq(isbn_codes.count)
-      get api_v1_books_url({ isbn: isbn_codes.first }), as: :json
+      get api_v1_books_url(isbn: isbn_codes.first), as: :json
       response_body = JSON.parse response.body
       expect(response).to be_successful
-      expect(response_body.count).to eq(1)
+      expect(response_body["books"].count).to eq(1)
+    end
+
+    it "paginates results" do
+      250.times { create :book }
+
+      get api_v1_books_url, as: :json
+      response_body = JSON.parse response.body
+
+      expect(response_body).to have_key("meta")
+      expect(response_body["meta"]).to have_key("page")
+      expect(response_body["meta"]["page"]).to eq(1)
+      expect(response_body["meta"]).to have_key("per_page")
+      expect(response_body["meta"]["per_page"]).to eq(100)
+      expect(response_body["meta"]).to have_key("total_pages")
+      expect(response_body["meta"]["total_pages"]).to eq(3)
+      expect(response_body["meta"]).to have_key("total_objects")
+      expect(response_body["meta"]["total_objects"]).to eq(250)
+    end
+
+    it "accepts pagination params" do
+      250.times { create :book }
+
+      get api_v1_books_url(page: 12, per_page: 10), as: :json
+      response_body = JSON.parse response.body
+
+      expect(response_body["meta"]["page"]).to eq(12)
+      expect(response_body["meta"]["per_page"]).to eq(10)
+      expect(response_body["meta"]["total_pages"]).to eq(25)
     end
   end
 

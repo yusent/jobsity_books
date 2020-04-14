@@ -4,7 +4,7 @@ class Api::V1::BooksController < ApplicationController
   # GET /books
   def index
     @books = Book.search book_search_params
-    render json: @books
+    paginate @books
   end
 
   # GET /books/:id
