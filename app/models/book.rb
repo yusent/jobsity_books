@@ -11,6 +11,7 @@ class Book < ApplicationRecord
   scope :search_by_isbn, -> (isbn) { where isbn: IsbnParser.parse(isbn).to_s }
 
   validates_presence_of :title, :author, :isbn, :price, :short_description
+  validates_uniqueness_of :isbn
   validates_length_of :short_description, maximum: 150
   validates :isbn, isbn: true
 

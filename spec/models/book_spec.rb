@@ -15,6 +15,9 @@ RSpec.describe Book, type: :model do
     it { should validate_presence_of(:price) }
     it { should validate_presence_of(:short_description) }
 
+    # Uniqueness validations
+    it { should validate_uniqueness_of(:isbn) }
+
     # Length validations
     it { should validate_length_of(:short_description).is_at_most(150) }
 

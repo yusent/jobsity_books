@@ -2,8 +2,8 @@ module IsbnParser
   SPLITTER_REGEX = /^(?:ISBN(?:-?\d*)?:?\s)?(.*)$/
 
   def self.parse(string)
-    match = string.match SPLITTER_REGEX
-    return nil if match.nil?
+    match = string&.match SPLITTER_REGEX
+    return if match.nil?
 
     base = match[1].gsub(/[^0-9X]/, "").length
 
