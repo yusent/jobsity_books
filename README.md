@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.org/yusent/jobsity_books.svg?branch=master)](https://travis-ci.org/yusent/jobsity_books)
 [![Coverage Status](https://coveralls.io/repos/github/yusent/jobsity_books/badge.svg?branch=master)](https://coveralls.io/github/yusent/jobsity_books?branch=master)
 
+[Challenge Description](challenge-description.pdf)
+
 ## Install & Run
 
 ### Using Docker Compose
